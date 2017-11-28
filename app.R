@@ -1,23 +1,13 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(colourpicker)
 
-# Define UI for application that draws a histogram
+# Define UI for application - takes inputs and prints the plot
 ui <- fluidPage(
    
-   # Application title
-   titlePanel("Happy Hour of Code 2017!"),
+      titlePanel("Happy Hour of Code 2017!"),
    helpText("This app is a demo using the R DNase data to demonstrate some of the functionality of Shiny for the NIH 2017 Hour of Code."),
    
-   # Sidebar with a slider input for number of bins 
+   # Sidebar with various input functions 
    sidebarLayout(
       sidebarPanel(
          numericInput("Run",
@@ -33,7 +23,7 @@ ui <- fluidPage(
          textInput("title", "Create a title:")
       ),
       
-      # Show a plot of the generated distribution
+      # show the plot
       mainPanel(
          plotOutput("scatterPlot")
       )
@@ -47,7 +37,7 @@ server <- function(input, output) {
      library(ggplot2) 
      # create the subset of the data based on the run we selected
       x    <- subset(DNase, Run == input$Run)
-     # draw the histogram with the specified number of bins
+     # draw the chart using ggplot2
       ggplot(data = x, aes(x = conc, y = density)) + geom_point(size = input$size, color = input$color) + ggtitle(input$title)
    })
 }
